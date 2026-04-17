@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   }}
                 >
                   {navigationItems.map((item) => (
-                    <li key={item.href}>
+            <li key={`${item.href}-${item.label}`}>
                       <Link href={item.href} style={{ color: "inherit" }}>
                         {item.label}
                       </Link>
