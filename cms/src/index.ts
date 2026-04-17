@@ -26,6 +26,8 @@ export default {
       'api::testimony.testimony.findOne',
       'api::blog-post.blog-post.find',
       'api::blog-post.blog-post.findOne',
+      'api::site-section.site-section.find',
+      'api::site-section.site-section.findOne',
     ];
 
     const role = await strapi.db
@@ -63,5 +65,21 @@ export default {
         },
       });
     }
+
+    strapi.db.lifecycles.subscribe({
+      models: ['api::blog-post.blog-post'],
+      beforeCreate(event) {
+        const data = event.params.data as { publishedAt?: string | null; publishDate?: string | null };
+        if (data?.publishedAt && !data.publishDate) {
+          throw new Error('publishDate is required when publishing a blog post.');
+        }
+      },
+      beforeUpdate(event) {
+        const data = event.params.data as { publishedAt?: string | null; publishDate?: string | null };
+        if (data?.publishedAt && !data.publishDate) {
+          throw new Error('publishDate is required when publishing a blog post.');
+        }
+      },
+    });
   },
 };

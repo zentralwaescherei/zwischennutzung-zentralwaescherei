@@ -2,15 +2,38 @@
   "collectionName": "components_content_text_blocks",
   "info": {
     "displayName": "Text Block",
-    "description": "Reusable heading and rich text block"
+    "description": "Reusable text content for placements across the site"
   },
   "attributes": {
-    "heading": {
+    "title": {
       "type": "string",
       "required": true
     },
+    "heading": {
+      "type": "string"
+    },
     "bodyRichText": {
       "type": "richtext",
+      "required": true
+    },
+    "ctaLabel": {
+      "type": "string"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "regex": "^(https?:\\/\\/|\\/).+"
+    },
+    "styleVariant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "accent",
+        "muted"
+      ],
+      "default": "default"
+    },
+    "placementKey": {
+      "type": "string",
       "required": true
     }
   }

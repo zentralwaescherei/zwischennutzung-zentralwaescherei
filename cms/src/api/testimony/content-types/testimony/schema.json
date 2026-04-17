@@ -15,8 +15,32 @@
       "required": true
     },
     "personName": {
+      "type": "string"
+    },
+    "displayLabel": {
       "type": "string",
       "required": true
+    },
+    "roleContext": {
+      "type": "string"
+    },
+    "portraitImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "themeTags": {
+      "type": "json"
+    },
+    "isApproved": {
+      "type": "boolean",
+      "default": false
+    },
+    "isAnonymous": {
+      "type": "boolean",
+      "default": false
     },
     "personRole": {
       "type": "string"
