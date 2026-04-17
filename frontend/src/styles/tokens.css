@@ -1,13 +1,23 @@
 :root.theme-neo-poster-minimal {
-  --color-bg: #f7f6f2;
-  --color-fg: #111111;
-  --color-accent: #2f6bff;
-  --color-border: #d9d4c8;
+  --color-bone: #f5f1e6;
+  --color-ink: #0b0b0b;
+  --color-acid: #f2ff3d;
+  --color-cobalt: #0a1cff;
+
+  --color-bg: var(--color-bone);
+  --color-fg: var(--color-ink);
+  --color-accent: var(--color-cobalt);
+  --color-border: var(--color-ink);
   --color-muted: #5c5a54;
+
+  --font-display: "Monument Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "Monument Grotesk Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --grid-max: 1440px;
+  --grid-gutter: clamp(1rem, 2vw, 1.5rem);
+  --space-section-y: clamp(5rem, 12vw, 10rem);
   --radius-card: 0px;
-  --space-section-y: clamp(3rem, 8vw, 7rem);
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --space-header-y: 1.5rem;
+  --space-header-y: 1.25rem;
   --space-header-x: 2rem;
-  --space-main: 2rem;
+  --space-main: 0;
 }
