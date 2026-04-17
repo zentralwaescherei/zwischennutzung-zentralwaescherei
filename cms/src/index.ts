@@ -81,5 +81,39 @@ export default {
         }
       },
     });
+
+    strapi.db.lifecycles.subscribe({
+      models: ['api::testimony.testimony'],
+      beforeCreate(event) {
+        const data = event.params.data as {
+          isAnonymous?: boolean;
+          personName?: string | null;
+          publishedAt?: string | null;
+          isApproved?: boolean;
+        };
+        if (!data?.isAnonymous && !data?.personName) {
+          throw new Error('personName is required unless testimony is anonymous.');
+        }
+        if (data?.publishedAt && !data?.isApproved) {
+          throw new Error('isApproved must be true before publishing testimony.');
+        }
+      },
+      beforeUpdate(event) {
+        const data = event.params.data as {
+          isAnonymous?: boolean;
+          personName?: string | null;
+          publishedAt?: string | null;
+          isApproved?: boolean;
+        };
+        const isAnonymous = data?.isAnonymous ?? false;
+        const personName = data?.personName;
+        if (!isAnonymous && personName === null) {
+          throw new Error('personName is required unless testimony is anonymous.');
+        }
+        if (data?.publishedAt && data?.isApproved === false) {
+          throw new Error('isApproved must be true before publishing testimony.');
+        }
+      },
+    });
   },
 };

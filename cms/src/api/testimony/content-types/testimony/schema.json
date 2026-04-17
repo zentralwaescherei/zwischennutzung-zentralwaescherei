@@ -18,8 +18,7 @@
       "type": "string"
     },
     "displayLabel": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "roleContext": {
       "type": "string"
