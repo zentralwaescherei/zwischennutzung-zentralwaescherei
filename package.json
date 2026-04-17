@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@9.12.0",
   "scripts": {
-    "dev": "pnpm --parallel --filter frontend --filter cms dev",
-    "test": "pnpm --filter frontend test && pnpm --filter frontend test:e2e"
+    "dev": "corepack pnpm --parallel --filter frontend --filter cms dev",
+    "test": "corepack pnpm --filter frontend test && corepack pnpm --filter frontend test:e2e"
   }
 }

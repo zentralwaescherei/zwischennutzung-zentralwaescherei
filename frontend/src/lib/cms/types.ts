@@ -71,6 +71,15 @@ export interface BlogPost {
   coverImage?: CmsImage | null;
 }
 
+/** Strapi-style: only entries with `publishedAt` are public (draft has null). */
+export function filterPublishedPosts(posts: BlogPost[]): BlogPost[] {
+  return posts.filter((post) => post.publishedAt != null && String(post.publishedAt).length > 0);
+}
+
+export function getPublishedPostBySlug(posts: BlogPost[], slug: string): BlogPost | undefined {
+  return filterPublishedPosts(posts).find((post) => post.slug === slug);
+}
+
 export interface CmsCollectionResponse<T> {
   data: T[];
   meta: {
