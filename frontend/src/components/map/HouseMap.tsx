@@ -17,11 +17,19 @@ type MapZone = {
   height: number;
 };
 
-const mapZones: MapZone[] = [
+export const HOUSE_MAP_ZONES: MapZone[] = [
   { id: "eg", label: "Erdgeschoss", shortLabel: "EG", x: 16, y: 126, width: 208, height: 76 },
   { id: "og1", label: "1. Obergeschoss", shortLabel: "OG1", x: 48, y: 76, width: 176, height: 42 },
   { id: "og2", label: "2. Obergeschoss", shortLabel: "OG2", x: 80, y: 32, width: 144, height: 36 },
 ];
+
+export function getHouseMapZoneLabel(zoneId: string | null): string | null {
+  if (!zoneId) {
+    return null;
+  }
+
+  return HOUSE_MAP_ZONES.find((zone) => zone.id === zoneId)?.label ?? `Bereich ${zoneId}`;
+}
 
 function isKeyboardSelection(event: KeyboardEvent<SVGGElement>) {
   return event.key === "Enter" || event.key === " ";
@@ -102,7 +110,7 @@ export function HouseMap({ selectedZoneId, onSelect }: HouseMapProps) {
           y="16"
         />
 
-        {mapZones.map((zone) => {
+        {HOUSE_MAP_ZONES.map((zone) => {
           const isSelected = selectedZoneId === zone.id;
 
           return (

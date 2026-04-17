@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useEffect } from "react";
 
-import { HouseMap } from "@/components/map/HouseMap";
+import { getHouseMapZoneLabel, HouseMap } from "@/components/map/HouseMap";
 import { OrganisationList } from "@/components/organisations/OrganisationList";
 import type { Organisation } from "@/lib/cms/types";
 import { byFloorArea } from "@/lib/filter/byFloorArea";
@@ -70,14 +71,32 @@ const organisations: Organisation[] = [
 export default function OrganisationenPage() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const zoneFromUrl = params.get("zone");
+    setSelectedZoneId(zoneFromUrl);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (selectedZoneId) {
+      params.set("zone", selectedZoneId);
+    } else {
+      params.delete("zone");
+    }
+
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+    window.history.replaceState(null, "", nextUrl);
+  }, [selectedZoneId]);
+
   const filteredOrganisations = useMemo(
     () => byFloorArea(organisations, selectedZoneId),
     [selectedZoneId],
   );
-  const selectedFloorArea = useMemo(
-    () =>
-      organisations.find((organisation) => organisation.floorArea.svgZoneId === selectedZoneId)
-        ?.floorArea ?? null,
+  const selectedFilterLabel = useMemo(
+    () => getHouseMapZoneLabel(selectedZoneId),
     [selectedZoneId],
   );
 
@@ -133,7 +152,7 @@ export default function OrganisationenPage() {
               textTransform: "uppercase",
             }}
           >
-            {selectedFloorArea ? `Filter aktiv: ${selectedFloorArea.name}` : "Alle Bereiche"}
+            {selectedFilterLabel ? `Filter aktiv: ${selectedFilterLabel}` : "Alle Bereiche"}
           </p>
           <p style={{ margin: 0, lineHeight: 1.6 }}>
             {filteredOrganisations.length} Organisation
@@ -141,7 +160,21 @@ export default function OrganisationenPage() {
           </p>
         </div>
 
-        <OrganisationList organisations={filteredOrganisations} />
+        {filteredOrganisations.length === 0 ? (
+          <p
+            style={{
+              margin: 0,
+              border: "1px solid #111111",
+              backgroundColor: "#fff8ef",
+              padding: "1rem 1.25rem",
+              lineHeight: 1.6,
+            }}
+          >
+            Fuer den gewaehlten Bereich sind aktuell keine Organisationen eingetragen.
+          </p>
+        ) : (
+          <OrganisationList organisations={filteredOrganisations} />
+        )}
       </div>
     </section>
   );
