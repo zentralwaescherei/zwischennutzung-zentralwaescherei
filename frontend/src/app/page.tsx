@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { TextBlockSection } from "@/components/content/TextBlockSection";
+
 const quickLinks = [
   {
     href: "/organisationen",
@@ -39,6 +41,15 @@ export default function HomePage() {
           Zeugnissen und redaktionellen Updates aus dem Haus.
         </p>
       </div>
+
+      <TextBlockSection
+        sectionId="home-intro-context"
+        styleVariant="accent"
+        title="Zwischennutzung im Fokus"
+        bodyHtml="<p>Hier finden Sie eine klare Orientierung: wer im Haus aktiv ist, welche Bereiche es gibt, und welche Stimmen die Bedeutung des Ortes beschreiben.</p>"
+        ctaLabel="Zu den Organisationen"
+        ctaUrl="/organisationen"
+      />
 
       <div
         style={{
