@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import "./globals.css";
+import { posterThemeClass } from "@/styles/theme";
+
 export const metadata: Metadata = {
   title: {
     default: "Zwischennutzung Zentralwaescherei",
@@ -21,65 +24,27 @@ const navigationItems = [
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de">
-      <body
-        style={{
-          margin: 0,
-          fontFamily: "Arial, sans-serif",
-          backgroundColor: "#f7f5ef",
-          color: "#111111",
-        }}
-      >
-        <div style={{ minHeight: "100vh" }}>
-          <header
-            style={{
-              borderBottom: "1px solid #d9d4c8",
-              padding: "1.5rem 2rem",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "1rem",
-              }}
-            >
-              <Link href="/" style={{ color: "inherit", fontWeight: 700, textDecoration: "none" }}>
+    <html lang="de" className={posterThemeClass}>
+      <body>
+        <div className="layout-shell">
+          <header className="site-header">
+            <div className="site-header-inner">
+              <Link href="/" className="site-title">
                 Zwischennutzung Zentralwaescherei
               </Link>
-              <nav aria-label="Hauptnavigation">
-                <ul
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "1rem",
-                    listStyle: "none",
-                    margin: 0,
-                    padding: 0,
-                  }}
-                >
+              <nav className="site-nav" aria-label="Hauptnavigation">
+                <ul>
                   {navigationItems.map((item) => (
-            <li key={`${item.href}-${item.label}`}>
-                      <Link href={item.href} style={{ color: "inherit" }}>
-                        {item.label}
-                      </Link>
+                    <li key={`${item.href}-${item.label}`}>
+                      <Link href={item.href}>{item.label}</Link>
                     </li>
                   ))}
                 </ul>
               </nav>
             </div>
           </header>
-          <main style={{ padding: "2rem" }}>{children}</main>
-          <footer
-            style={{
-              borderTop: "1px solid #d9d4c8",
-              padding: "1.5rem 2rem",
-            }}
-          >
-            Oeffentliche V1-Struktur fuer Inhalte aus dem CMS.
-          </footer>
+          <main className="site-main">{children}</main>
+          <footer className="site-footer">Oeffentliche V1-Struktur fuer Inhalte aus dem CMS.</footer>
         </div>
       </body>
     </html>

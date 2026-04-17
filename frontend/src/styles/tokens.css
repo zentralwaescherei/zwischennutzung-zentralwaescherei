@@ -1,0 +1,13 @@
+:root.theme-neo-poster-minimal {
+  --color-bg: #f7f6f2;
+  --color-fg: #111111;
+  --color-accent: #2f6bff;
+  --color-border: #d9d4c8;
+  --color-muted: #5c5a54;
+  --radius-card: 0px;
+  --space-section-y: clamp(3rem, 8vw, 7rem);
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --space-header-y: 1.5rem;
+  --space-header-x: 2rem;
+  --space-main: 2rem;
+}
