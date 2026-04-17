@@ -426,3 +426,20 @@ html {
   background: transparent; border: 0; color: inherit; font: inherit; cursor: pointer;
   padding: 0 0.25rem;
 }
+
+.zone { cursor: pointer; }
+.zone:hover, .zone:focus-visible {
+  outline: none;
+  animation: zone-pulse 1s ease-out 1;
+}
+.zone-active { fill: var(--color-cobalt) !important; }
+
+@keyframes zone-pulse {
+  0%   { stroke-width: 1.5; }
+  50%  { stroke-width: 3; stroke: var(--color-cobalt); }
+  100% { stroke-width: 1.5; stroke: var(--color-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone:hover, .zone:focus-visible { animation: none; }
+}

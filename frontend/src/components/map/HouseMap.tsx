@@ -120,6 +120,12 @@ export function HouseMap({ selectedZoneId, onSelect }: HouseMapProps) {
               key={zone.id}
               onClick={() => onSelect(zone.id)}
               onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  event.preventDefault();
+                  onSelect(null);
+                  return;
+                }
+
                 if (!isKeyboardSelection(event)) {
                   return;
                 }
@@ -131,6 +137,8 @@ export function HouseMap({ selectedZoneId, onSelect }: HouseMapProps) {
               tabIndex={0}
             >
               <rect
+                className={`zone ${isSelected ? "zone-active" : ""}`.trim()}
+                data-zone={zone.id}
                 fill={isSelected ? "#c5d6ff" : "#ffffff"}
                 height={zone.height}
                 stroke="#111111"

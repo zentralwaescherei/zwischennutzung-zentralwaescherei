@@ -44,4 +44,9 @@ describe("HouseMap", () => {
 
     expect(handleSelect).toHaveBeenCalledWith(null);
   });
+
+  it("adds a zone-active class to the active zone element", () => {
+    const { container } = render(<HouseMap selectedZoneId="eg" onSelect={() => {}} />);
+    expect(container.querySelector('[data-zone="eg"].zone-active')).not.toBeNull();
+  });
 });
