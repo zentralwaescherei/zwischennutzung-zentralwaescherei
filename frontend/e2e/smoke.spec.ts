@@ -8,4 +8,8 @@ test("smoke journey", async ({ page }) => {
   await expect(page.getByRole("img", { name: /haus/i })).toBeVisible();
   await page.locator("header").getByRole("link", { name: "Blog", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /zum beitrag/i }).first()).toBeVisible();
+
+  await page.locator("header").getByRole("link", { name: "Zeugnisse", exact: true }).click();
+  await expect(page.getByRole("heading", { name: /stimmen zur zwischennutzung/i })).toBeVisible();
 });

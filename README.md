@@ -1,36 +1,67 @@
 # Zwischennutzung Zentralwaescherei
 
-German-language public website (Next.js) with Strapi CMS. This repository is a pnpm monorepo with `frontend` and `cms` packages.
+German-language public website (Next.js) with Strapi CMS. This repository is a **pnpm** monorepo with `frontend` and `cms` packages.
 
 ## Prerequisites
 
-- Node.js (LTS recommended)
-- pnpm 9.12.0 (see `packageManager` in root `package.json`)
+- **Node.js 20 LTS** (recommended for Strapi and native SQLite bindings in local dev)
+- **Corepack** enabled (ships with Node) so `pnpm` is available via `corepack pnpm`
+
+```bash
+corepack enable
+```
+
+The repo pins `packageManager` to **pnpm@9.12.0** in the root `package.json`.
 
 ## Setup
 
 From the repository root:
 
 ```bash
-pnpm install
+corepack pnpm install
 ```
 
-After `frontend/` and `cms/` exist as workspace packages (created in later tasks), run:
+Install Playwright browsers once (for end-to-end tests):
 
 ```bash
-pnpm dev
+corepack pnpm --filter frontend exec playwright install chromium
 ```
 
-Runs the Next.js app and Strapi admin in parallel.
+## Development
+
+Start Next.js and Strapi together:
+
+```bash
+corepack pnpm dev
+```
+
+- Frontend: [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- Strapi admin: [http://127.0.0.1:1337/admin](http://127.0.0.1:1337/admin)
+
+Set `FRONTEND_URL` in `cms/.env` if the public UI runs on another origin (CORS).
 
 ## Scripts (root)
 
-These scripts become usable after Task 3+ creates both workspace packages:
+| Command | Description |
+|--------|-------------|
+| `corepack pnpm dev` | Next + Strapi dev in parallel |
+| `corepack pnpm test` | Frontend Vitest + Playwright smoke (`frontend` only) |
 
-- `pnpm dev`: Start frontend and CMS dev servers in parallel
-- `pnpm test`: Run frontend unit tests and end-to-end tests
+Per-package:
+
+```bash
+corepack pnpm --filter frontend test
+corepack pnpm --filter frontend test:e2e
+corepack pnpm --filter frontend build
+corepack pnpm --filter cms develop
+```
+
+## Launch checklist
+
+Editorial and QA steps before go-live: [docs/content-entry-checklist.md](docs/content-entry-checklist.md).
 
 ## Repository layout
 
-- `frontend/` - public Next.js site (added in later tasks)
-- `cms/` - Strapi v5 project (added in later tasks)
+- `frontend/` — Next.js App Router site
+- `cms/` — Strapi v5 API and admin
+- `docs/superpowers/` — design spec and implementation plan
