@@ -25,7 +25,7 @@ Runs the Next.js app and Strapi admin in parallel.
 
 ## Scripts (root)
 
-These scripts become usable after Task 2+ creates workspace packages:
+These scripts become usable after Task 3+ creates both workspace packages:
 
 - `pnpm dev`: Start frontend and CMS dev servers in parallel
 - `pnpm test`: Run frontend unit tests and end-to-end tests
