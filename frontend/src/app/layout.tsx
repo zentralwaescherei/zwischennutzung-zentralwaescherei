@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import "./globals.css";
 import { monumentDisplay, monumentMono } from "@/lib/fonts";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { posterThemeClass } from "@/styles/theme";
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <SiteHeader />
         <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
