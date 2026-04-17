@@ -90,7 +90,7 @@ export function HouseMap({ selectedZoneId, onSelect }: HouseMapProps) {
 
       <svg
         aria-labelledby="house-map-title house-map-description"
-        role="img"
+        role="group"
         viewBox="0 0 240 220"
         style={{ width: "100%", height: "auto", display: "block" }}
       >

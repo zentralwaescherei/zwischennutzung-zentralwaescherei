@@ -11,6 +11,7 @@ export function FloorSelect({ zones, selectedZoneId, onChange }: FloorSelectProp
     <label className="mono floor-select">
       <span className="floor-select__label">Bereich</span>
       <select
+        aria-label="Bereich"
         className="floor-select__input"
         value={selectedZoneId ?? ""}
         onChange={(e) => onChange(e.target.value === "" ? null : e.target.value)}

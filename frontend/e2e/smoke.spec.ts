@@ -1,15 +1,25 @@
 import { expect, test } from "@playwright/test";
 
-test("smoke journey", async ({ page }) => {
+test("one-pager anchor journey", async ({ page }) => {
   await page.goto("/");
-  const orgNav = page.locator("header").getByRole("link", { name: "Organisationen", exact: true });
-  await expect(orgNav).toBeVisible();
-  await orgNav.click();
-  await expect(page.getByRole("img", { name: /haus/i })).toBeVisible();
-  await page.locator("header").getByRole("link", { name: "Blog", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /zum beitrag/i }).first()).toBeVisible();
 
-  await page.locator("header").getByRole("link", { name: "Zeugnisse", exact: true }).click();
-  await expect(page.getByRole("heading", { name: /stimmen zur zwischennutzung/i })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+
+  for (const [link, id] of [
+    ["HAUS", "organisationen"],
+    ["ZEUGNISSE", "zeugnisse"],
+    ["BLOG", "blog"],
+    ["START", "start"],
+  ] as const) {
+    await page.locator("header").getByRole("link", { name: link }).click();
+    await expect(page.locator(`section#${id}`)).toBeInViewport({ ratio: 0.25 });
+  }
+
+  await page.locator("[aria-label='Bereich']").selectOption({ index: 1 });
+  await expect(page.getByText(/zone:/i)).toBeVisible();
+
+  const firstPost = page.locator("a[href^='/blog/']").first();
+  await firstPost.click();
+  await page.waitForURL(/\/blog\//);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
