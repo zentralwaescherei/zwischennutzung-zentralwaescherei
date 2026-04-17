@@ -9,9 +9,6 @@
       "type": "string",
       "required": true
     },
-    "heading": {
-      "type": "string"
-    },
     "bodyRichText": {
       "type": "richtext",
       "required": true
@@ -26,11 +23,10 @@
     "styleVariant": {
       "type": "enumeration",
       "enum": [
-        "default",
-        "accent",
-        "muted"
+        "neutral",
+        "accent"
       ],
-      "default": "default"
+      "default": "neutral"
     },
     "placementKey": {
       "type": "string"

@@ -74,9 +74,17 @@ export default {
           throw new Error('publishDate is required when publishing a blog post.');
         }
       },
-      beforeUpdate(event) {
+      async beforeUpdate(event) {
         const data = event.params.data as { publishedAt?: string | null; publishDate?: string | null };
-        if (data?.publishedAt && !data.publishDate) {
+        const id = event.params.where?.id as number | undefined;
+        const existing = id
+          ? ((await strapi.db
+              .query('api::blog-post.blog-post')
+              .findOne({ where: { id } })) as { publishedAt?: string | null; publishDate?: string | null } | null)
+          : null;
+        const effectivePublishedAt = data?.publishedAt ?? existing?.publishedAt ?? null;
+        const effectivePublishDate = data?.publishDate ?? existing?.publishDate ?? null;
+        if (effectivePublishedAt && !effectivePublishDate) {
           throw new Error('publishDate is required when publishing a blog post.');
         }
       },
@@ -98,19 +106,32 @@ export default {
           throw new Error('isApproved must be true before publishing testimony.');
         }
       },
-      beforeUpdate(event) {
+      async beforeUpdate(event) {
         const data = event.params.data as {
           isAnonymous?: boolean;
           personName?: string | null;
           publishedAt?: string | null;
           isApproved?: boolean;
         };
-        const isAnonymous = data?.isAnonymous ?? false;
-        const personName = data?.personName;
-        if (!isAnonymous && personName === null) {
+        const id = event.params.where?.id as number | undefined;
+        const existing = id
+          ? ((await strapi.db
+              .query('api::testimony.testimony')
+              .findOne({ where: { id } })) as {
+              isAnonymous?: boolean;
+              personName?: string | null;
+              publishedAt?: string | null;
+              isApproved?: boolean;
+            } | null)
+          : null;
+        const effectiveIsAnonymous = data?.isAnonymous ?? existing?.isAnonymous ?? false;
+        const effectivePersonName = data?.personName ?? existing?.personName ?? null;
+        const effectivePublishedAt = data?.publishedAt ?? existing?.publishedAt ?? null;
+        const effectiveIsApproved = data?.isApproved ?? existing?.isApproved ?? false;
+        if (!effectiveIsAnonymous && !effectivePersonName) {
           throw new Error('personName is required unless testimony is anonymous.');
         }
-        if (data?.publishedAt && data?.isApproved === false) {
+        if (effectivePublishedAt && !effectiveIsApproved) {
           throw new Error('isApproved must be true before publishing testimony.');
         }
       },
