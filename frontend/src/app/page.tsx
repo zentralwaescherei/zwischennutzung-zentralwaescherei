@@ -3,6 +3,7 @@ import { IntroSection } from "@/components/sections/IntroSection";
 import { OrganisationsSection } from "@/components/sections/OrganisationsSection";
 import { ZeugnisseSection } from "@/components/sections/ZeugnisseSection";
 import { BlogTeaserSection } from "@/components/sections/BlogTeaserSection";
+import { VoteModeStrap } from "@/components/voting/VoteModeStrap";
 import { allBlogPosts } from "@/lib/blog/samplePosts";
 import { filterPublishedPosts } from "@/lib/cms/types";
 import type { Organisation } from "@/lib/cms/types";
@@ -65,9 +66,16 @@ const sampleTestimonies = [
 
 export default function HomePage() {
   const posts = filterPublishedPosts(allBlogPosts);
+  const voteEnabled = process.env.NEXT_PUBLIC_VOTE_MODE === "1";
+  const latestPostSlug = posts[0]?.slug ?? null;
 
   return (
     <>
+      <VoteModeStrap
+        enabled={voteEnabled}
+        label="Abstimmung Juni 2026"
+        latestPostSlug={latestPostSlug}
+      />
       <HeroSection voteDateLabel="Abstimmung Juni 2026" />
       <IntroSection
         title="Ein Haus mit vielen Stimmen"

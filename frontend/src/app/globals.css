@@ -443,3 +443,10 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .zone:hover, .zone:focus-visible { animation: none; }
 }
+
+.vote-strap {
+  display: flex; justify-content: center; gap: 2rem;
+  background: var(--color-ink); color: var(--color-bone);
+  padding: 0.5rem 1rem; font-size: 0.875rem; letter-spacing: 0.1em;
+}
+.vote-strap a { color: var(--color-acid); }
