@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_content_text_blocks",
+  "info": {
+    "displayName": "Text Block",
+    "description": "Reusable heading and rich text block"
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "bodyRichText": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
