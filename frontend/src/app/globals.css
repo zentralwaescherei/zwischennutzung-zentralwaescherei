@@ -240,3 +240,24 @@ html {
   .intro-meta { display: none; }
   .intro-title, .intro-body, .intro-cta { grid-column: 1 / -1; }
 }
+
+.floor-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid currentColor;
+  padding: 0.5rem 0.75rem;
+}
+
+.floor-select__label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.floor-select__input {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  font: inherit;
+  padding: 0.25rem 0.5rem;
+}
