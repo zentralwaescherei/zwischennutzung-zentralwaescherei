@@ -402,3 +402,18 @@ html {
   [data-reveal="out"] { opacity: 0; transform: none; }
   [data-reveal="in"]  { transition: opacity 0.01ms linear; }
 }
+
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee__track { display: inline-flex; gap: 4rem; animation: marquee linear infinite; }
+.marquee__track > span { font-family: var(--font-mono); letter-spacing: 0.1em; }
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track { animation-play-state: paused; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}

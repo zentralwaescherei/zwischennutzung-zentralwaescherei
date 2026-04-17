@@ -1,3 +1,5 @@
+import { Marquee } from "@/components/motion/Marquee";
+
 type HeroSectionProps = {
   voteDateLabel: string;
 };
@@ -5,9 +7,7 @@ type HeroSectionProps = {
 export function HeroSection({ voteDateLabel }: HeroSectionProps) {
   return (
     <section id="start" aria-labelledby="hero-title" className="section section--hero">
-      <p className="mono hero-strap" aria-hidden="true">
-        ZWISCHEN&shy;NUTZUNG · ZENTRAL&shy;WÄSCHEREI · ZÜRICH · 2026 →
-      </p>
+      <Marquee text="ZWISCHEN-NUTZUNG · ZENTRAL-WAESCHEREI · ZUERICH · 2026 →" />
       <p className="mono hero-strap--sr">
         Zwischennutzung Zentralwäscherei, Zürich, 2026.
       </p>
