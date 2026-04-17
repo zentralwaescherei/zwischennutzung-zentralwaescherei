@@ -9,15 +9,23 @@ describe("OrganisationenPage map filter wiring", () => {
     window.history.replaceState(null, "", "/");
   });
 
-  it("reads the initial zone from the URL query string", async () => {
+  it("reads the initial zone from the URL query string on first render", () => {
     window.history.replaceState(null, "", "/organisationen?zone=og1");
 
     render(<OrganisationenPage />);
 
-    expect(await screen.findByText("Filter aktiv: 1. Obergeschoss")).toBeInTheDocument();
+    expect(screen.getByText("Filter aktiv: 1. Obergeschoss")).toBeInTheDocument();
     expect(screen.getByText("1 Organisation sichtbar")).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Werkstatt" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Radio Zentral" })).toBeInTheDocument();
+  });
+
+  it("does not rewrite URL query on initial mount", () => {
+    window.history.replaceState(null, "", "/organisationen?zone=og1&foo=bar");
+
+    render(<OrganisationenPage />);
+
+    expect(window.location.search).toBe("?zone=og1&foo=bar");
   });
 
   it("writes filter selections back to the URL and can clear them", async () => {

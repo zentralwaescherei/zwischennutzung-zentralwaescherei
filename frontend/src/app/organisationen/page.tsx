@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { getHouseMapZoneLabel, HouseMap } from "@/components/map/HouseMap";
 import { OrganisationList } from "@/components/organisations/OrganisationList";
@@ -68,16 +67,24 @@ const organisations: Organisation[] = [
   },
 ];
 
+function getInitialZoneIdFromUrl() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return new URLSearchParams(window.location.search).get("zone");
+}
+
 export default function OrganisationenPage() {
-  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
+  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(getInitialZoneIdFromUrl);
+  const hasMountedRef = useRef(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const zoneFromUrl = params.get("zone");
-    setSelectedZoneId(zoneFromUrl);
-  }, []);
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
 
-  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
     if (selectedZoneId) {
