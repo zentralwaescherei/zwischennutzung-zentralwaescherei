@@ -3,12 +3,15 @@ import type { CSSProperties } from "react";
 
 type StyleVariant = "neutral" | "accent";
 
+export type TextBlockVariant = "poster" | "quiet";
+
 export type TextBlockSectionProps = {
   title: string;
   bodyHtml: string;
   ctaLabel?: string | null;
   ctaUrl?: string | null;
   styleVariant?: StyleVariant | null;
+  variant?: TextBlockVariant | null;
   /** Stable id for heading/aria; defaults from title */
   sectionId?: string;
 };
@@ -50,12 +53,17 @@ const ctaStyle: CSSProperties = {
   textUnderlineOffset: "0.15em",
 };
 
-export function TextBlockSection({ title, bodyHtml, ctaLabel, ctaUrl, styleVariant, sectionId }: TextBlockSectionProps) {
-  const variant: StyleVariant = styleVariant === "accent" ? "accent" : "neutral";
+export function TextBlockSection({ title, bodyHtml, ctaLabel, ctaUrl, styleVariant, variant, sectionId }: TextBlockSectionProps) {
+  const styleVariantResolved: StyleVariant = styleVariant === "accent" ? "accent" : "neutral";
+  const blockVariant: TextBlockVariant = variant === "poster" ? "poster" : "quiet";
   const headingId = sectionId ?? defaultSectionId(title);
 
   return (
-    <section aria-labelledby={headingId} style={sectionStyle(variant)}>
+    <section
+      aria-labelledby={headingId}
+      className={`textblock textblock--${blockVariant}`}
+      style={sectionStyle(styleVariantResolved)}
+    >
       <h2 id={headingId} style={titleStyle}>
         {title}
       </h2>

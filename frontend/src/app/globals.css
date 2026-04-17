@@ -194,3 +194,49 @@ html {
   justify-self: end;
   opacity: 0.7;
 }
+
+.section--intro {
+  background: var(--color-bone);
+  color: var(--color-ink);
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--grid-gutter);
+  max-width: var(--grid-max);
+  margin-inline: auto;
+}
+
+.intro-meta {
+  grid-column: 1 / span 1;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  opacity: 0.7;
+}
+
+.intro-title {
+  grid-column: 2 / span 6;
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  margin: 0;
+}
+
+.intro-body {
+  grid-column: 7 / span 5;
+  line-height: 1.6;
+  font-size: 1.0625rem;
+}
+
+.intro-cta {
+  grid-column: 2 / span 10;
+  justify-self: start;
+  padding: 0.75rem 1rem;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .intro-meta { display: none; }
+  .intro-title, .intro-body, .intro-cta { grid-column: 1 / -1; }
+}
