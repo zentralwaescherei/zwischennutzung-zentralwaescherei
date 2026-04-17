@@ -1,5 +1,11 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+import { HouseMap } from "@/components/map/HouseMap";
 import { OrganisationList } from "@/components/organisations/OrganisationList";
 import type { Organisation } from "@/lib/cms/types";
+import { byFloorArea } from "@/lib/filter/byFloorArea";
 
 const organisations: Organisation[] = [
   {
@@ -62,6 +68,19 @@ const organisations: Organisation[] = [
 ];
 
 export default function OrganisationenPage() {
+  const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
+
+  const filteredOrganisations = useMemo(
+    () => byFloorArea(organisations, selectedZoneId),
+    [selectedZoneId],
+  );
+  const selectedFloorArea = useMemo(
+    () =>
+      organisations.find((organisation) => organisation.floorArea.svgZoneId === selectedZoneId)
+        ?.floorArea ?? null,
+    [selectedZoneId],
+  );
+
   return (
     <section style={{ display: "grid", gap: "2rem" }}>
       <div style={{ display: "grid", gap: "1rem", maxWidth: "48rem" }}>
@@ -87,11 +106,43 @@ export default function OrganisationenPage() {
         <p style={{ margin: 0, lineHeight: 1.7 }}>
           Das Verzeichnis gibt einen schnellen Ueberblick ueber die Akteurinnen und Akteure der
           Zwischennutzung. Jede Karte fuehrt direkt zur Website und oeffnet auf Wunsch ein ruhiges
-          Detailblatt mit Kurzprofil und Standort im Haus.
+          Detailblatt mit Kurzprofil und Standort im Haus. Die Hauskarte filtert den Bestand direkt
+          nach Ebene.
         </p>
       </div>
 
-      <OrganisationList organisations={organisations} />
+      <div style={{ display: "grid", gap: "1.25rem" }}>
+        <HouseMap onSelect={setSelectedZoneId} selectedZoneId={selectedZoneId} />
+
+        <div
+          aria-live="polite"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "baseline",
+            gap: "0.75rem",
+            borderBottom: "1px solid #111111",
+            paddingBottom: "0.75rem",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "0.75rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
+            {selectedFloorArea ? `Filter aktiv: ${selectedFloorArea.name}` : "Alle Bereiche"}
+          </p>
+          <p style={{ margin: 0, lineHeight: 1.6 }}>
+            {filteredOrganisations.length} Organisation
+            {filteredOrganisations.length === 1 ? "" : "en"} sichtbar
+          </p>
+        </div>
+
+        <OrganisationList organisations={filteredOrganisations} />
+      </div>
     </section>
   );
 }
