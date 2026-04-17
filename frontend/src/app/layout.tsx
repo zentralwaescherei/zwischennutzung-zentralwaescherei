@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import "./globals.css";
 import { monumentDisplay, monumentMono } from "@/lib/fonts";
+import { SiteHeader } from "@/components/layout/SiteHeader";
 import { posterThemeClass } from "@/styles/theme";
 
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="de"
       className={`${posterThemeClass} ${monumentDisplay.variable} ${monumentMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <SiteHeader />
+        <main id="main">{children}</main>
+      </body>
     </html>
   );
 }
