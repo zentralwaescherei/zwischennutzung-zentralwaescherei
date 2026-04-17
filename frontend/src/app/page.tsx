@@ -1,78 +1,86 @@
-import Link from "next/link";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { IntroSection } from "@/components/sections/IntroSection";
+import { OrganisationsSection } from "@/components/sections/OrganisationsSection";
+import { ZeugnisseSection } from "@/components/sections/ZeugnisseSection";
+import { BlogTeaserSection } from "@/components/sections/BlogTeaserSection";
+import { allBlogPosts } from "@/lib/blog/samplePosts";
+import { filterPublishedPosts } from "@/lib/cms/types";
+import type { Organisation } from "@/lib/cms/types";
 
-import { TextBlockSection } from "@/components/content/TextBlockSection";
+export const revalidate = 300;
 
-const quickLinks = [
+const sampleOrganisations: Organisation[] = [
   {
-    href: "/organisationen",
-    title: "Hauskarte",
-    description: "Direkter Einstieg zur Orientierung im Haus und zum Lageplan der Bereiche.",
-    linkLabel: "Zur Hauskarte",
+    id: "werkstatt",
+    slug: "werkstatt",
+    name: "Werkstatt",
+    shortDescription:
+      "Offene Infrastruktur fuer gemeinsames Reparieren, Bauen und experimentelles Lernen.",
+    websiteUrl: "https://example.org/werkstatt",
+    categoryTags: ["Werkstatt", "Offen"],
+    floorArea: { id: "eg", name: "Erdgeschoss", slug: "eg", svgZoneId: "eg", sortOrder: 1 },
+    logoOrImage: null,
+    isFeatured: true,
   },
   {
-    href: "/organisationen",
-    title: "Organisationen",
-    description: "Ueberblick ueber alle Akteurinnen und Akteure im Haus.",
+    id: "radio",
+    slug: "radio",
+    name: "Radio Zentral",
+    shortDescription:
+      "Community-Redaktion fuer lokale Stimmen, Workshops und niedrigschwellige Medienpraxis.",
+    websiteUrl: "https://example.org/radio-zentral",
+    categoryTags: ["Medien", "Community"],
+    floorArea: { id: "og1", name: "1. Obergeschoss", slug: "og1", svgZoneId: "og1", sortOrder: 2 },
+    logoOrImage: null,
+    isFeatured: false,
   },
   {
-    href: "/zeugnisse",
-    title: "Zeugnisse",
-    description: "Persoenliche Stimmen zur Bedeutung der Zwischennutzung.",
+    id: "kueche",
+    slug: "kueche",
+    name: "Kollektivkueche",
+    shortDescription:
+      "Gemeinsame Kochformate, nachbarschaftliche Treffen und Sorgearbeit rund um den Alltag im Haus.",
+    websiteUrl: "https://example.org/kollektivkueche",
+    categoryTags: ["Nachbarschaft", "Sorge"],
+    floorArea: { id: "og2", name: "2. Obergeschoss", slug: "og2", svgZoneId: "og2", sortOrder: 3 },
+    logoOrImage: null,
+    isFeatured: false,
+  },
+];
+
+const sampleTestimonies = [
+  {
+    id: "t1",
+    quote: "Die Waescherei gibt uns einen Ort, den wir sonst nicht haetten.",
+    displayLabel: "Anwohnerin",
+    isApproved: true,
   },
   {
-    href: "/blog",
-    title: "Blog",
-    description: "Aktuelle Einblicke, Termine und redaktionelle Updates.",
+    id: "t2",
+    quote: "Hier entsteht Nachbarschaft jenseits der reinen Nutzbarkeit.",
+    displayLabel: "Kulturarbeiter",
+    isApproved: true,
   },
 ];
 
 export default function HomePage() {
+  const posts = filterPublishedPosts(allBlogPosts);
+
   return (
-    <section style={{ display: "grid", gap: "2rem" }}>
-      <div style={{ display: "grid", gap: "1rem", maxWidth: "48rem" }}>
-        <p style={{ margin: 0, fontSize: "0.875rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          Website V1
-        </p>
-        <h1 style={{ margin: 0, fontSize: "clamp(2.5rem, 8vw, 5rem)", lineHeight: 1 }}>
-          Zwischennutzung Zentralwaescherei
-        </h1>
-        <p style={{ margin: 0, fontSize: "1.125rem", lineHeight: 1.6 }}>
-          Diese Startseite bildet die erste oeffentliche Struktur fuer Informationen zu Organisationen,
-          Zeugnissen und redaktionellen Updates aus dem Haus.
-        </p>
-      </div>
-
-      <TextBlockSection
-        sectionId="home-intro-context"
-        styleVariant="accent"
-        title="Zwischennutzung im Fokus"
-        bodyHtml="<p>Hier finden Sie eine klare Orientierung: wer im Haus aktiv ist, welche Bereiche es gibt, und welche Stimmen die Bedeutung des Ortes beschreiben.</p>"
-        ctaLabel="Zu den Organisationen"
-        ctaUrl="/organisationen"
+    <>
+      <HeroSection voteDateLabel="Abstimmung Juni 2026" />
+      <IntroSection
+        title="Ein Haus mit vielen Stimmen"
+        bodyHtml="<p>Die Zwischennutzung Zentralwaescherei oeffnet Raum fuer Werkstatt, Medien, Nachbarschaft und Kultur — mitten in Zuerich.</p>"
+        ctaLabel="Organisationen entdecken"
+        ctaUrl="#organisationen"
       />
-
-      <div
-        style={{
-          display: "grid",
-          gap: "1rem",
-          gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))",
-        }}
-      >
-        {quickLinks.map((item) => (
-          <article
-            key={`${item.href}-${item.title}`}
-            style={{
-              border: "1px solid #111111",
-              padding: "1.25rem",
-              backgroundColor: "#ffffff",
-            }}
-          >
-            <h2 style={{ marginTop: 0 }}>{item.title}</h2>
-            <p>{item.description}</p>
-            <Link href={item.href}>{item.linkLabel ?? "Zur Seite"}</Link>
-          </article>
-        ))}
-      </div>
-    </section>
+      <OrganisationsSection organisations={sampleOrganisations} initialZoneId={null} />
+      <ZeugnisseSection
+        testimonies={sampleTestimonies}
+        introHtml="<p>Persoenliche Stimmen zur Bedeutung des Ortes.</p>"
+      />
+      <BlogTeaserSection posts={posts} />
+    </>
   );
 }
