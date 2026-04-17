@@ -1,8 +1,20 @@
 import path from 'path';
+import fs from 'fs';
 import type { Core } from '@strapi/strapi';
 
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
+  const sqliteFilename = path.join(
+    __dirname,
+    '..',
+    '..',
+    env('DATABASE_FILENAME', '.tmp/data.db'),
+  );
+
+  // Ensure sqlite directory exists before Strapi opens the DB file.
+  if (client === 'sqlite') {
+    fs.mkdirSync(path.dirname(sqliteFilename), { recursive: true });
+  }
 
   const connections = {
     mysql: {
@@ -45,7 +57,7 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
     },
     sqlite: {
       connection: {
-        filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        filename: sqliteFilename,
       },
       useNullAsDefault: true,
     },

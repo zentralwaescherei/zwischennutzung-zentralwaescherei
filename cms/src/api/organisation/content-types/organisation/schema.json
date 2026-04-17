@@ -25,7 +25,8 @@
     },
     "websiteUrl": {
       "type": "string",
-      "required": true
+      "required": true,
+      "regex": "^(https?:\\/\\/).+"
     },
     "categoryTags": {
       "type": "json"
