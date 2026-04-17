@@ -3,6 +3,12 @@ import Link from "next/link";
 const quickLinks = [
   {
     href: "/organisationen",
+    title: "Hauskarte",
+    description: "Direkter Einstieg zur Orientierung im Haus und zum Lageplan der Bereiche.",
+    linkLabel: "Zur Hauskarte",
+  },
+  {
+    href: "/organisationen",
     title: "Organisationen",
     description: "Ueberblick ueber alle Akteurinnen und Akteure im Haus.",
   },
@@ -43,7 +49,7 @@ export default function HomePage() {
       >
         {quickLinks.map((item) => (
           <article
-            key={item.href}
+            key={`${item.href}-${item.title}`}
             style={{
               border: "1px solid #111111",
               padding: "1.25rem",
@@ -52,7 +58,7 @@ export default function HomePage() {
           >
             <h2 style={{ marginTop: 0 }}>{item.title}</h2>
             <p>{item.description}</p>
-            <Link href={item.href}>Zur Seite</Link>
+            <Link href={item.href}>{item.linkLabel ?? "Zur Seite"}</Link>
           </article>
         ))}
       </div>

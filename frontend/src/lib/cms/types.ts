@@ -1,4 +1,10 @@
-export type PublicationStatus = "draft" | "published";
+export type CmsJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | CmsJsonValue[]
+  | { [key: string]: CmsJsonValue };
 
 export interface CmsImage {
   url: string;
@@ -32,7 +38,7 @@ export interface Organisation {
   slug: string;
   shortDescription: string;
   websiteUrl: string;
-  categoryTags: string[];
+  categoryTags?: CmsJsonValue | null;
   floorArea: FloorArea;
   logoOrImage?: CmsImage | null;
   isFeatured: boolean;
@@ -45,8 +51,12 @@ export interface Testimony {
   displayLabel?: string | null;
   roleContext?: string | null;
   portraitImage?: CmsImage | null;
-  themeTags: string[];
+  themeTags?: CmsJsonValue | null;
   isApproved: boolean;
+  isAnonymous?: boolean | null;
+  personRole?: string | null;
+  organisation?: Organisation | null;
+  sortOrder?: number | null;
 }
 
 export interface BlogPost {
@@ -57,8 +67,8 @@ export interface BlogPost {
   bodyRichText: string;
   authorName: string;
   publishDate?: string | null;
+  publishedAt?: string | null;
   coverImage?: CmsImage | null;
-  status: PublicationStatus;
 }
 
 export interface CmsCollectionResponse<T> {

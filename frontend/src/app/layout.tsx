@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 
 const navigationItems = [
   { href: "/", label: "Start" },
+  { href: "/organisationen", label: "Hauskarte" },
   { href: "/organisationen", label: "Organisationen" },
   { href: "/zeugnisse", label: "Zeugnisse" },
   { href: "/blog", label: "Blog" },
