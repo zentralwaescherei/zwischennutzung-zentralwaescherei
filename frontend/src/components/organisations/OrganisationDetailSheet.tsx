@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 import type { Organisation } from "@/lib/cms/types";
 
@@ -42,6 +42,69 @@ export function OrganisationDetailSheet({
   organisation,
   onClose,
 }: OrganisationDetailSheetProps) {
+  const dialogRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!organisation) {
+      return undefined;
+    }
+
+    previousActiveElementRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    closeButtonRef.current?.focus();
+
+    const handleDocumentKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleDocumentKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleDocumentKeyDown);
+      previousActiveElementRef.current?.focus();
+    };
+  }, [organisation, onClose]);
+
+  const handleDialogKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Tab") {
+      return;
+    }
+
+    const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+
+    if (!focusableElements || focusableElements.length === 0) {
+      event.preventDefault();
+      dialogRef.current?.focus();
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey) {
+      if (activeElement === firstElement || !dialogRef.current?.contains(activeElement)) {
+        event.preventDefault();
+        lastElement.focus();
+      }
+
+      return;
+    }
+
+    if (activeElement === lastElement || !dialogRef.current?.contains(activeElement)) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
+
   if (!organisation) {
     return null;
   }
@@ -51,8 +114,11 @@ export function OrganisationDetailSheet({
       <aside
         aria-labelledby={`organisation-title-${organisation.id}`}
         aria-modal="true"
+        onKeyDown={handleDialogKeyDown}
+        ref={dialogRef}
         role="dialog"
         style={panelStyle}
+        tabIndex={-1}
       >
         <div
           style={{
@@ -83,6 +149,7 @@ export function OrganisationDetailSheet({
           <button
             aria-label={`Schliessen ${organisation.name}`}
             onClick={onClose}
+            ref={closeButtonRef}
             style={{
               border: "1px solid #111111",
               backgroundColor: "#ffffff",
