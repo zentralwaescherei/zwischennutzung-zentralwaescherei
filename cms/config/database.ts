@@ -4,11 +4,12 @@ import type { Core } from '@strapi/strapi';
 
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
+  const databaseFilename = env('DATABASE_FILENAME');
   const sqliteFilename = path.join(
     __dirname,
     '..',
     '..',
-    env('DATABASE_FILENAME', '.tmp/data.db'),
+    databaseFilename && databaseFilename.trim() ? databaseFilename : '.tmp/data.db',
   );
 
   // Ensure sqlite directory exists before Strapi opens the DB file.
