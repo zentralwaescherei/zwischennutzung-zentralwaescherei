@@ -8,6 +8,7 @@ import {
   HOUSE_MAP_ZONES,
   getHouseMapZoneLabel,
 } from "@/components/map/HouseMap";
+import { ActiveFilterChip } from "@/components/motion/ActiveFilterChip";
 import { OrganisationList } from "@/components/organisations/OrganisationList";
 import type { Organisation } from "@/lib/cms/types";
 import { byFloorArea } from "@/lib/filter/byFloorArea";
@@ -50,17 +51,8 @@ export function OrganisationsSection({ organisations, initialZoneId }: Props) {
         <h2 id="org-title" className="display display--outline org-header__title">
           Organisationen
         </h2>
-        <div className="org-header__chip mono" aria-live="polite">
-          {zone ? (
-            <>
-              ZONE: {label ?? zone}{" "}
-              <button type="button" aria-label="Filter entfernen" onClick={() => setZone(null)}>
-                ✕
-              </button>
-            </>
-          ) : (
-            "ALLE"
-          )}
+        <div className="org-header__chip" aria-live="polite">
+          <ActiveFilterChip label={zone ? label ?? zone : null} onClear={() => setZone(null)} />
         </div>
       </div>
 

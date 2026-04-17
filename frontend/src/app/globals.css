@@ -417,3 +417,12 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .marquee__track { animation: none; }
 }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.75rem; border: 1px solid currentColor;
+}
+.chip button {
+  background: transparent; border: 0; color: inherit; font: inherit; cursor: pointer;
+  padding: 0 0.25rem;
+}
