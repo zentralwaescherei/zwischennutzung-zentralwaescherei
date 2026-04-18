@@ -21,3 +21,21 @@ Use this before go-live and before major communications (e.g. public vote).
 9. Walk through: Start → Organisationen (map + list) → Zeugnisse → Blog → open one blog post.
 10. Open a shared organisation URL with `?zone=…` and confirm filter and empty states behave as expected.
 11. Verify no draft-only blog posts or unapproved testimonies appear on the public site.
+
+## One-pager site sections (v2)
+
+The public site is a single page at `/`. The following `site-section.placementKey` entries must exist and be published:
+
+1. `home-intro` — mission framing under the hero.
+2. `organisationen-intro` — short lede above the house map.
+3. `zeugnisse-intro` — lede for the cobalt Zeugnisse section.
+4. `footer-note` — Kontakt block in the Kolofon footer.
+
+## Vote-ready checklist
+
+Before enabling `NEXT_PUBLIC_VOTE_MODE=1`:
+
+1. Verify Impressum and Datenschutz pages are reachable.
+2. Publish the campaign-relevant blog post so it becomes the latest entry.
+3. Confirm no draft testimonies or unapproved content leak into the public view.
+4. Re-run `corepack pnpm test` on staging.

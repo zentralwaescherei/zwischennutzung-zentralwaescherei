@@ -60,6 +60,17 @@ corepack pnpm --filter cms develop
 
 Editorial and QA steps before go-live: [docs/content-entry-checklist.md](docs/content-entry-checklist.md).
 
+## Deployment flags
+
+- `NEXT_PUBLIC_VOTE_MODE=1` enables a persistent top strap on `/` with the vote date and a link to the most recent published blog post. Off by default.
+- `NEXT_PUBLIC_SITE_URL` sets the canonical base URL used in the sitemap (default `https://zentralwaescherei.example`).
+
+## Tests
+
+- Unit + component: `corepack pnpm --filter frontend test`
+- End-to-end (smoke + redirects + a11y): `corepack pnpm --filter frontend test:e2e`
+- Full suite: `corepack pnpm test`
+
 ## Repository layout
 
 - `frontend/` — Next.js App Router site
