@@ -1,0 +1,23 @@
+:root.theme-neo-poster-minimal {
+  --color-bone: #f5f1e6;
+  --color-ink: #0b0b0b;
+  --color-acid: #f2ff3d;
+  --color-cobalt: #0a1cff;
+
+  --color-bg: var(--color-bone);
+  --color-fg: var(--color-ink);
+  --color-accent: var(--color-cobalt);
+  --color-border: var(--color-ink);
+  --color-muted: #5c5a54;
+
+  --font-display: "Monument Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "Monument Grotesk Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  --grid-max: 1440px;
+  --grid-gutter: clamp(1rem, 2vw, 1.5rem);
+  --space-section-y: clamp(5rem, 12vw, 10rem);
+  --radius-card: 0px;
+  --space-header-y: 1.25rem;
+  --space-header-x: 2rem;
+  --space-main: 0;
+}

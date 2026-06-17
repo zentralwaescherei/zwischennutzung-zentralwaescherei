@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "site_sections",
+  "info": {
+    "singularName": "site-section",
+    "pluralName": "site-sections",
+    "displayName": "Site Section",
+    "description": "Reusable globally managed text block placements"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "placementKey": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "textBlocks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "content.text-block",
+      "required": true
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

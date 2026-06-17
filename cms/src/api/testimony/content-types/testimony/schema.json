@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonies",
+  "info": {
+    "singularName": "testimony",
+    "pluralName": "testimonies",
+    "displayName": "Testimony"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "personName": {
+      "type": "string"
+    },
+    "displayLabel": {
+      "type": "string"
+    },
+    "roleContext": {
+      "type": "string"
+    },
+    "portraitImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "themeTags": {
+      "type": "json"
+    },
+    "isApproved": {
+      "type": "boolean",
+      "default": false
+    },
+    "isAnonymous": {
+      "type": "boolean",
+      "default": false
+    },
+    "personRole": {
+      "type": "string"
+    },
+    "organisation": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::organisation.organisation"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

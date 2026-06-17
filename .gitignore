@@ -1,1 +1,12 @@
 .worktrees/
+node_modules/
+.next/
+dist/
+.strapi/
+.env
+.env.*
+cms/.tmp/
+cms/build/
+frontend/playwright-report/
+frontend/test-results/
+frontend/tsconfig.tsbuildinfo
